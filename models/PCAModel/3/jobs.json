@@ -1,0 +1,40 @@
+[
+  {
+    "args": [],
+    "author": "1002",
+    "dateCreated": 1530234368,
+    "displayName": "PCAModel-1530234323616",
+    "env": [],
+    "fileName": "PCAModel-batch-scoring-1530234323616.py",
+    "jobId": "bb5b6d93000a6346",
+    "jobName": "pcamodel-1530234323616",
+    "mainScript": [
+      "/opt/conda/bin/python",
+      "scripts/PCAModel-batch-scoring-1530234323616.py"
+    ],
+    "remoteOptions": [],
+    "runtimeEnvironment": "dsx-scripted-ml-python2",
+    "scheduleDescription": "On demand",
+    "targetHost": "",
+    "type": "Batch scoring"
+  },
+  {
+    "args": [],
+    "author": "1002",
+    "dateCreated": 1530234485,
+    "displayName": "PCAModel-1530234433813",
+    "env": [],
+    "fileName": "PCAModel-model-evaluation-1530234433813.py",
+    "jobId": "7022c462e1f3e7d5",
+    "jobName": "pcamodel-1530234433813",
+    "mainScript": [
+      "/opt/conda/bin/python",
+      "scripts/PCAModel-model-evaluation-1530234433813.py"
+    ],
+    "remoteOptions": [],
+    "runtimeEnvironment": "dsx-scripted-ml-python2",
+    "scheduleDescription": "On demand",
+    "targetHost": "",
+    "type": "Model evaluation"
+  }
+]
