@@ -1,7 +1,0 @@
-datasets="/usr/lib/R/library/datasets"
-grDevices="/usr/lib/R/library/grDevices"
-graphics="/usr/lib/R/library/graphics"
-methods="/usr/lib/R/library/methods"
-sparklyr="/usr/local/lib/R/site-library/sparklyr"
-stats="/usr/lib/R/library/stats"
-utils="/usr/lib/R/library/utils"
