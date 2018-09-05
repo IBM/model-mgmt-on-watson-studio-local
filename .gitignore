@@ -4,3 +4,6 @@
 # all dataset files except original wine data
 datasets
 !datasets/Wine.csv
+
+# tmp directory
+tmp
