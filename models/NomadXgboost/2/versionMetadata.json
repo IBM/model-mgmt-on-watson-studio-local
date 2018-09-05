@@ -1,9 +1,0 @@
-{
-    "description": "", 
-    "modelVersion": 2, 
-    "modifiedAt": 1531158540591, 
-    "modifiedBy": "1002", 
-    "performanceMetrics": {
-        "explainedVarianceScore": 0.9227221286315935
-    }
-}
