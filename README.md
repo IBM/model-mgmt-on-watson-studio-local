@@ -80,30 +80,175 @@ This sets up Livy.
 Follow these steps to setup the proper environment to run our notebooks locally.
 
 1. [Clone the repo](#1-clone-the-repo)
-2. [Download and move the data to HDFS](#2-download-and-move-the-data-to-hdfs)
-3. [Launch the notebook](#3-launch-the-notebook)
-4. [Run the notebook](#4-run-the-notebook)
+1. [Download and move data to HDFS on Hortonworks](#2-download-and-move-data-to-hdfs-on-hortonworks)
+1. [Launch the notebook](#3-launch-the-notebook)
+1. [Run the notebook](#4-run-the-notebook)
 
-in DSX Local:
+### 1. Clone the repo
+```
+git clone git@github.com:IBM/model-mgmt-on-dsx-local-and-hortonworks.git
+```
 
-- Create project
-- Add notebooks, data files, and scripts
-- Run notebook 1
-- Save off notebook 1 as a python script so it can be run in batch mode
-- Run notebook 2
-- Commit and push changes (v1.0)
+### 2. Download and move data to HDFS on Hortonworks
 
-In Deployment Manager:
 
-- Add Project Release v1.0
-- Goto models and create a web service deployment for it.
-  - click on model
-  - click on `+ web service`
-  name it pcamodel
-- Create deployed versions of scripts
-- From main panel, pick menu of pcamodel & select `Launch` or hit play button. This will take all the deployments on-line.
-- Click on pcamodel model to see API endpoint
-  - copy endpoint and token to paste into scripts
+### 3. Create IBM DSX Local project
+
+* From the DSX Local home page, select the `Add Project` button.
+
+![](doc/source/images/dsx-local-project-list.png)
+
+* To create a project in DSX Local, give the project a name and press the `Create` button. 
+
+![](doc/source/images/dsx-local-create-project.png)
+
+### 4. Create project assets
+
+* Once created, you can view all of the project assets by selecting the `Assets` tab from the project's home page. 
+
+![](doc/source/images/dsx-local-notebook-list.png)
+
+* Add our wine feature extraction and modeling notebooks into the project. Add the first notebook by selecting `Notebooks` in the project `Assets` list, then pressing the `Add Notebook` button.
+
+* Enter a notebook name and use the `From URL` option to load the notebook from the github repo.
+
+![](doc/source/images/dsx-local-create-notebook-1.png)
+
+* Enter this URL:
+
+```
+https://raw.githubusercontent.com/IBM/model-mgmt-on-dsx-local-and-hortonworks/master/notebooks/pca-features.ipynb
+```
+
+Repeat this step to add the second notebook, using the following URL:
+```
+https://raw.githubusercontent.com/IBM/model-mgmt-on-dsx-local-and-hortonworks/master/notebooks/pca-modeling.ipynb
+```
+
+* Add our batch scripts into the project, one at a time, by selecting `Scripts` in the project `Assets` list, then pressing the `Add Script` button.
+
+![](doc/source/images/dsx-local-scripts-list.png)
+
+* Select the `From File` tab and use the `Drag and Drop` option to load the following script files:
+
+```
+scripts/feature_engineering.py
+scripts/extract_and_score.py
+scripts/model_scoring.py
+```
+
+![](doc/source/images/dsx-local-create-script.png)
+
+### 5. Run the notebooks to create our model
+
+Run both notebooks to create and save our model.
+
+* From the `Notebooks` list, click on the notebook to launch the Jupyter notebook. Execute the `pca-features` notebook first, which reads in and transforms the wine data set. It also creates data files that will be required by the next notebook. Now execute the `pca-modeling` notebook, which generates and saves our data model.
+
+![](doc/source/images/dsx-local-notebook-list-2.png)
+
+When a notebook is executed, what is actually happening is that each code cell in
+the notebook is executed, in order, from top to bottom.
+
+Each code cell is selectable and is preceded by a tag in the left margin. The tag
+format is `In [x]:`. Depending on the state of the notebook, the `x` can be:
+
+* A blank, this indicates that the cell has never been executed.
+* A number, this number represents the relative order this code step was executed.
+* A `*`, which indicates that the cell is currently executing.
+
+There are several ways to execute the code cells in your notebook:
+
+* One cell at a time.
+  * Select the cell, and then press the `Play` button in the toolbar.
+* Batch mode, in sequential order.
+  * From the `Cell` menu bar, there are several options available. For example, you
+    can `Run All` cells in your notebook, or you can `Run All Below`, that will
+    start executing from the first cell under the currently selected cell, and then
+    continue executing all cells that follow.
+* At a scheduled time.
+  * Press the `Schedule` button located in the top right section of your notebook
+    panel. Here you can schedule your notebook to be executed once at some future
+    time, or repeatedly at your specified interval.
+ 
+> Note: After executing the notebooks, you may be wondering why we just didn't combine all of the code into just a single notebook. The reason is simply to seperate out the the data building and transformation steps from the model creation and saving steps. This way we can run the first notebook in the future (when more test data is available) without generating a new model. In fact, if we did have new data, we would want to score it against the existing model first, then generate a new model if the results were not acceptable.
+>
+> As you will see later, running the first notebook will be done by running a script in our project (`scripts/feature_engineering.py`). This script was initially created by loading the `pca-features` notebook into Jupyter, then exporting the notebook cells into a `python` script (use the menu options `File` -> `Download as` -> `Python (.py)`). We only had to modify the script slightly to include some code to handling data versioning. 
+
+Once the model is created, you can view it in the project `Asset` list. Note that it is given a default version number.
+
+![](doc/source/images/dsx-local-model-list.png)
+
+### 5. Commit changes to DSX Local Master Repository
+
+After making changes to your project, you will be occasionally reminded to commit and push your changes to the DSX Local Master Repoisory.
+
+![](doc/source/images/dsx-local-commit-request.png)
+
+Now that we have added our notebooks and scripts, and generated our model, let's go ahead and do that. Commit and push all of our new assets, and set the version tag to `v1.0`.
+
+![](doc/source/images/dsx-local-push-project.png)
+
+### 6. Create release project in IBM Deployment Manager
+
+The IBM Deployment Manager provides the mechanism to deploy our model as a web service. It manages `Project Releases`, which we will now create.
+
+* Launch the IBM Deployment Manager by selecting it from the main drop-down menu on the DSX Local home page.
+
+![](doc/source/images/mmd-launch-option.png)
+
+* From the `Project releases` page, press the `Add Project Release` button.
+
+![](doc/source/images/mmd-project-list.png)
+
+* Select our previously committed project from the `Source project` drop-down list, and select the version tag you assigned to the project. Give the release a `Name` and a `Route` (which can be any random string), and the press `Create`.
+
+![](doc/source/images/mmd-create-project.png)
+
+* If you click on the `Assets` tab, you will see all of the assets associated with the project.
+
+![](doc/source/images/mmd-project-assets.png)
+
+### 7. Deploy our model as a web service
+
+* Select the model from the list of `Assets` associated with our project. From the model details panel, press the `web service` button.
+
+![](doc/source/images/mmd-model-list.png)
+
+* On the model deployment screen, provide a name, reserve some CPUs and memory, then press `Create`.
+
+![](doc/source/images/mmd-model-deploy.png)
+
+### 8. Deploy our scripts as a job
+
+* From the details panel for the `feature_engineering.py` script, press the `job` button. 
+
+![](doc/source/images/mmd-script-details.png)
+
+* On the script deploy screen, provide a name, set the type to `Script run`, add `v1` as a command line argument, then press `Create`.
+
+![](doc/source/images/mmd-deploy-script.png)
+
+Repeat these steps for the remaining 2 scripts.
+
+### 9. Take deployments on-line
+
+If you select the `Deployments` tab from the project page, you will notice that all of the deployments are listed as disabled.
+
+![](doc/source/images/mmd-deployments-disabled.png)
+
+To bring the deployments on-line, press the `Play` button icon, which is the left-most icon listed at the top of the page. Once you complete the action, you should see the following.
+
+![](doc/source/images/mmd-deployments-enabled.png)
+
+> Note: you may have to manually `Enable` the model deployment by using the menu options listed on the right side of the model row in the deployments table.
+
+### 10. Gather model API data for use in scripts
+
+![](doc/source/images/mmd-model-api.png)
+
+![](doc/source/images/mmd-model-api-code.png)
+
 
 In DSX Local:
 
