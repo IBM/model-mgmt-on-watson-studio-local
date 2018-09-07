@@ -30,7 +30,7 @@ When you have completed this code pattern, you will understand how to:
 
 ![](doc/source/images/architecture.png)
 
-1. Load the wine classifcation dataset into Apache Hadoop HDFS running on HDP.
+1. Load the wine classification dataset into Apache Hadoop HDFS running on HDP.
 2. Use Spark DataFrame operations to clean the dataset and use Spark MLlib to train a PCA classification model.
 3. Save the resulting model into DSX Local.
 4. The user can run the provided notebooks in DSX Local.
@@ -88,14 +88,14 @@ Follow these steps to setup the proper environment to run our notebooks locally.
 1. [Create release project in IBM Deployment Manager](#7-create-release-project-in-ibm-deployment-manager)
 1. [Deploy our model as a web service](#8-deploy-our-model-as-a-web-service)
 1. [Deploy our scripts as a job](#9-deploy-our-scripts-as-a-job)
-1. [Take deployments on-line](#10-take-deployments-on-line)
+1. [Bring deployments on-line](#10-bring-deployments-on-line)
 1. [Gather API endpoints data for use in scripts](#11-gather-api-endpoints-data-for-use-in-scripts)
 1. [Modify scripts in DSX Local](#12-modify-scripts-in-dsx-local)
 1. [Run scripts locally to test](#13-run-scripts-locally-to-test)
 
 ### 1. Clone the repo
 ```
-git clone git@github.com:IBM/model-mgmt-on-dsx-local-and-hortonworks.git
+git clone https://github.com/IBM/model-mgmt-on-dsx-local-and-hortonworks.git
 ```
 
 ### 2. Download and move data to HDFS on Hortonworks
@@ -240,7 +240,7 @@ The IBM Deployment Manager provides the mechanism to deploy our model as a web s
 
 Repeat these steps for the remaining 2 scripts.
 
-### 10. Take deployments on-line
+### 10. Bring deployments on-line
 
 If you select the `Deployments` tab from the project page, you will notice that all of the deployments are listed as disabled.
 
