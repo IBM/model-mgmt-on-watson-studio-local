@@ -30,7 +30,7 @@ When you have completed this code pattern, you will understand how to:
 
 ![](doc/source/images/architecture.png)
 
-1. Load the wine classifcation dataset into Apache Hadoop HDFS running on HDP.
+1. Load the wine classification dataset into Apache Hadoop HDFS running on HDP.
 2. Use Spark DataFrame operations to clean the dataset and use Spark MLlib to train a PCA classification model.
 3. Save the resulting model into DSX Local.
 4. The user can run the provided notebooks in DSX Local.
@@ -81,12 +81,21 @@ Follow these steps to setup the proper environment to run our notebooks locally.
 
 1. [Clone the repo](#1-clone-the-repo)
 1. [Download and move data to HDFS on Hortonworks](#2-download-and-move-data-to-hdfs-on-hortonworks)
-1. [Launch the notebook](#3-launch-the-notebook)
-1. [Run the notebook](#4-run-the-notebook)
+1. [Create IBM DSX Local project](#3-create-ibm-dsx-local-project)
+1. [Create project assets](#4-create-project-assets)
+1. [Run the notebooks to create our model](#5-run-the-notebooks-to-create-our-model)
+1. [Commit changes to DSX Local Master Repository](#6-commit-changes-to-dsx-local-master-repository)
+1. [Create release project in IBM Deployment Manager](#7-create-release-project-in-ibm-deployment-manager)
+1. [Deploy our model as a web service](#8-deploy-our-model-as-a-web-service)
+1. [Deploy our scripts as a job](#9-deploy-our-scripts-as-a-job)
+1. [Bring deployments on-line](#10-bring-deployments-on-line)
+1. [Gather API endpoints data for use in scripts](#11-gather-api-endpoints-data-for-use-in-scripts)
+1. [Modify scripts in DSX Local](#12-modify-scripts-in-dsx-local)
+1. [Run scripts locally to test](#13-run-scripts-locally-to-test)
 
 ### 1. Clone the repo
 ```
-git clone git@github.com:IBM/model-mgmt-on-dsx-local-and-hortonworks.git
+git clone https://github.com/IBM/model-mgmt-on-dsx-local-and-hortonworks.git
 ```
 
 ### 2. Download and move data to HDFS on Hortonworks
@@ -179,7 +188,7 @@ Once the model is created, you can view it in the project `Asset` list. Note tha
 
 ![](doc/source/images/dsx-local-model-list.png)
 
-### 5. Commit changes to DSX Local Master Repository
+### 6. Commit changes to DSX Local Master Repository
 
 After making changes to your project, you will be occasionally reminded to commit and push your changes to the DSX Local Master Repoisory.
 
@@ -189,7 +198,7 @@ Now that we have added our notebooks and scripts, and generated our model, let's
 
 ![](doc/source/images/dsx-local-push-project.png)
 
-### 6. Create release project in IBM Deployment Manager
+### 7. Create release project in IBM Deployment Manager
 
 The IBM Deployment Manager provides the mechanism to deploy our model as a web service. It manages `Project Releases`, which we will now create.
 
@@ -209,7 +218,7 @@ The IBM Deployment Manager provides the mechanism to deploy our model as a web s
 
 ![](doc/source/images/mmd-project-assets.png)
 
-### 7. Deploy our model as a web service
+### 8. Deploy our model as a web service
 
 * Select the model from the list of `Assets` associated with our project. From the model details panel, press the `web service` button.
 
@@ -219,7 +228,7 @@ The IBM Deployment Manager provides the mechanism to deploy our model as a web s
 
 ![](doc/source/images/mmd-model-deploy.png)
 
-### 8. Deploy our scripts as a job
+### 9. Deploy our scripts as a job
 
 * From the details panel for the `feature_engineering.py` script, press the `job` button. 
 
@@ -231,7 +240,7 @@ The IBM Deployment Manager provides the mechanism to deploy our model as a web s
 
 Repeat these steps for the remaining 2 scripts.
 
-### 9. Take deployments on-line
+### 10. Bring deployments on-line
 
 If you select the `Deployments` tab from the project page, you will notice that all of the deployments are listed as disabled.
 
@@ -243,18 +252,88 @@ To bring the deployments on-line, press the `Play` button icon, which is the lef
 
 > Note: you may have to manually `Enable` the model deployment by using the menu options listed on the right side of the model row in the deployments table.
 
-### 10. Gather model API data for use in scripts
+### 11. Gather API endpoints data for use in scripts
+
+Some of our scripts will need access to our deployed model and, in some cases, to the other deployed scripts. 
+
+Here is a quick overview of what our scripts do and require:
+
+* **feature_engineering.py** - this script performs the same function as our `pca-features` notebook. It reads in data from the wine dataset, then applies machine learning techniques to transform the data. The output will be two data files - `features` and `target`. Note that theese data files will have a version tag appended to them so that their contents are not over-written every time that this script is run. This script does not require access to our model or other scripts.
+
+* **model_scoring.py** - this script is a batch processor. It reads the `features` data file and scores each feature, one at a time, by running them through our model. The output will be a `scoring_output` data file. Note that the data file will have a version tag appended to it so that its contents are not over-written every time that this script is run. This script requires access to our deployed model.
+
+* **extract_and_score.py** - this script was created for convenience, and can be used instead of running the previous scripts separately. It invokes the `feature_engineering` script first, then when complete, it invokes the `model_scoring` script. This script requires access to the other deployed scripts.
+
+To access the deployed model or scripts, we need to gather the associated API endpoints and an authorization token. All of these values are available from the deployment pages for each of the objects. The endpoints will take on the following format:
+
+* model endpoints will end in `/score`.
+* script endpoints will end in either `/trigger`, `/status`, or `/cancel` (which corresponds to the actions: `start`, `status`, and `stop`).
+
+To get the endpoint for our deployed model, click on the model from the `Assets` tab of the project page.  
 
 ![](doc/source/images/mmd-model-api.png)
 
-![](doc/source/images/mmd-model-api-code.png)
+The endpoint is listed at the top of the page. Both the `Endpoint` and the `Deployment Token` can be saved to the clipboard by clicking on their respective ![](doc/source/images/mmd-clipboard.png) icons.
 
+Repeat this step to retrieve the endpoints for both the `feature_engineering` and `model_scoring` scripts. 
 
-In DSX Local:
+> Note: You will only need to get one copy of the `Deployment Token`. It will be the same for all deployments within this project.
 
-- go to each script and paste in API values
-- run each script locally to test out (hard to debug in MMD)
-- Commit and push changes (v1.1)
+### 12. Modify scripts in DSX Local
+
+Once we have gathered our deployment endpoints and deployment token, we need to go back to `DSX Local` mode so that we can modify and test our scripts.
+
+![](doc/source/images/mmd-launch-option-dsx.png)
+
+Go to the `Assets` list for the project, and select `Scripts`. Click on a script file to open it up in edit mode. 
+
+The scripts we will be modifying are those that reference deployment objects. These are:
+
+```
+scripts/model_scoring.py
+scripts/extract_and_score.py
+```
+* For the `model_scoring` script, substitute in the token and endpoint values.
+
+![](doc/source/images/dsx-local-modify-script.png)
+
+* For the `extract_and_score` script, substitute in the token and endpoint values. The endpoints values can be for either the `feature_engineering` or `model_scoring` deployment scripts. And the endpoints will end in either `/trigger` or `/statue`. The comments in the code will hopefully make it obvious which endpoint to use.
+
+![](doc/source/images/dsx-local-modify-script-2.png)
+
+### 13. Run scripts locally to test
+
+To avoid having to go back and forth between DSX Local and the Deployment Manager (which includes re-deploying with creating new release versions), make sure the scripts run locally in DSX Local first.
+
+* From the project page, click on `Scripts` in the `Assets` list.  
+
+![](doc/source/images/dsx-local-scripts-list-full.png)
+
+Start with the script `feature_engineering`. Use the menu bar on the right side of the script row to `Create Job` and run the script.
+
+In the `Create Job` run panel, provide a unique name and make sure you use the following options:
+  * Type: `Script Run`
+  * Target host: `Local instance`
+  * Source asset: `/scripts/feature_engineering.py`
+  * Command line arguments: `v1`
+
+After you press the `Create` button, you will see the run panel. 
+
+![](doc/source/images/dsx-local-script-run.png)
+
+If you scroll down a bit, you will see a `Run Now` button. Click it to start the script. Again, you will be presented with a dialog that requires you give it a run name. The rest of the values will be defaulted to values you already set, so they do not need to be modified. Click the `Run` button to run the script.
+
+You will be transferred back to the run panel where you can see the status (listed under `Duration`) and a tail of the log file. Once completed successfully, you should see 2 new files listed under `Data sets` in the `Assets` list.
+
+![](doc/source/images/dsx-local-data-sets-list.png)
+
+> Note: The created data files (`target` and `features`) have a version tag appended to their name. This matches the command line argument we passed into the script.
+
+Repeat this process to run the `model_scoring` script. And if that completes successfully, run the `extract_and_score` script.
+
+Once you have verified that all of the scripts are working, commit and push the changes 
+to the DSX Local Master Repository, as described above in [Step #6](#6-commit-changes-to-dsx-local-master-repository). Make sure you bump the version number.
+
 
 In Deployment Manager:
 

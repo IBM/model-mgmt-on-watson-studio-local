@@ -21,9 +21,9 @@ for i in range(len(features)):
     
     body = {"args": data}
     
-    header = {'Content-Type': 'application/json','Cache-Control': 'no-cache','Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpc2hudSIsInBhY2thZ2VOYW1lIjoicGNhLW1vZGVsIiwicGFja2FnZVJvdXRlIjoicGNhIiwiaWF0IjoxNTI5OTE1OTkwfQ.kcOwXMU9NngHZLLPOa3J4NeQUSFia5zEbIND_YdzN-8KVGMLtURR725rZQL8KPktw1iWQwc9JlKEiKao58_DJIuZb01ekKZExD-qBozsSpjvalQaKKMA2QaI42zgeMSCyuU6zAzA4AEXFjyOoulEsZ0zBCOrZocIyLLDuLIClRSVrf_lZFsbx3roKhODqcLzeGcexN-7_HcXCotGaWsEvASkpq3ivFC4a3F3SqZ7w0cXFMAh9RrK5UPZNb4aD_0AcSed1WcddGWeBxz8JgZvOExQ5IHsukhb1bsCWa1wFSV8C6oxZb4Sb71fqHD9HDRrF4LxB-7FyLpdcvF66dm-zg'}
+    header = {'Content-Type': 'application/json','Cache-Control': 'no-cache','Authorization': '<add token>'}
 
-    url = 'https://hca.datascienceelite.com/dmodel/v1/pca/pyscript/pcamodel/score'
+    url = '<add endpoint>'
     
     submit_request = requests.post(url=url,json=body,headers=header,verify=False)
     
