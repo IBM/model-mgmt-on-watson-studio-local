@@ -8,9 +8,9 @@ args = sys.argv[1]
 body = {"env":[],"args":[args]} 
 body
 
-header = {'Content-Type': 'application/json','Cache-Control': 'no-cache','Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpc2hudSIsInBhY2thZ2VOYW1lIjoicGNhLW1vZGVsIiwicGFja2FnZVJvdXRlIjoicGNhIiwiaWF0IjoxNTI5OTE1OTkwfQ.kcOwXMU9NngHZLLPOa3J4NeQUSFia5zEbIND_YdzN-8KVGMLtURR725rZQL8KPktw1iWQwc9JlKEiKao58_DJIuZb01ekKZExD-qBozsSpjvalQaKKMA2QaI42zgeMSCyuU6zAzA4AEXFjyOoulEsZ0zBCOrZocIyLLDuLIClRSVrf_lZFsbx3roKhODqcLzeGcexN-7_HcXCotGaWsEvASkpq3ivFC4a3F3SqZ7w0cXFMAh9RrK5UPZNb4aD_0AcSed1WcddGWeBxz8JgZvOExQ5IHsukhb1bsCWa1wFSV8C6oxZb4Sb71fqHD9HDRrF4LxB-7FyLpdcvF66dm-zg'}
+header = {'Content-Type': 'application/json','Cache-Control': 'no-cache','Authorization': '<add token>'}
 
-url_ef = 'https://hca.datascienceelite.com/djob/v1/pca/extractfeatures/trigger'
+url_ef = '<<add feature_engineering endpoint>/trigger'
 
 extract_features = requests.post(url=url_ef,json=body,headers=header,verify=False)
 
@@ -30,7 +30,7 @@ print status_ef
 
 body_sc = {}
 
-url_sc1 = 'https://hca.datascienceelite.com/djob/v1/pca/extractfeatures/status/'+jobId_ef
+url_sc1 = '<<add feature_engineering endpoint>/status/'+jobId_ef
 
 import time
 
@@ -53,7 +53,7 @@ while status_ef == 'Waiting' or status_ef == 'Running' or status_ef == 'Pending'
 
 if status_ef == 'Succeeded':
 
-  url_ms = 'https://hca.datascienceelite.com/djob/v1/pca/scoremodel/trigger'
+  url_ms = '<add model_scoring endpoint>/trigger'
   
   model_scoring = requests.post(url=url_ms,json=body,headers=header,verify=False)
   
@@ -75,7 +75,7 @@ print jobId_ms
 status_ms = str(result_ms['jobExecution']['result'])
 print status_ms
 
-url_sc2 = 'https://hca.datascienceelite.com/djob/v1/pca/scoremodel/status/'+jobId_ms
+url_sc2 = '<add model_scoring endpoint>/status/'+jobId_ms
 
 while status_ms == 'Waiting' or status_ms == 'Running' or status_ms == 'Pending':
 
