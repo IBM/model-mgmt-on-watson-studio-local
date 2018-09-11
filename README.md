@@ -2,7 +2,7 @@
 
 Principal component analysis (PCA) is a popular machine learning tool used to create predictive models by reducing the number of features in a data set. 
 
-The goal of this code pattern is to demonstrate the key integration points that allow data scientists to run IBM's Data Science Experience Local (DSX-Local) built on the Hortonworks Data Platform (HDP).
+The goal of this code pattern is to demonstrate the key integration points that allow data scientists to run IBM's Data Science Experience Local (DSX Local) built on the Hortonworks Data Platform (HDP).
 
 > **What is HDP?** Hortonworks Data Platform (HDP) is a massively scalable platform for storing, processing and analyzing large volumes of data. HDP consists of the essential set of Apache Hadoop projects including MapReduce, Hadoop Distributed File System (HDFS), HCatalog, Pig, Hive, HBase, Zookeeper and Ambari.
 
@@ -14,7 +14,7 @@ The goal of this code pattern is to demonstrate the key integration points that 
 
 > **What is the IBM Deployment Manager?** The Deployment Manager is a DSX Local tool that provides users the ability to create and train machine learning models. Users can also deploy their models to make them available to a wider audience.
 
-This repo contains two Jupyter notebooks illustrating how to use Spark for training and scoring a model built on a [wine classification data set](https://www.kaggle.com/brynja/wineuci). The data consists of a set of wines with their associated chemical features and assigned wine classification. 
+This repo contains two Jupyter notebooks illustrating how to use Spark for training and scoring a model built on a [wine classification data set](https://www.kaggle.com/brynja/wineuci). The data contains a list of wines with their associated chemical features and assigned wine classification.
 
 The first notebook uses various machine learning techniques to reduce the number of features required to accurately classify any particular wine.
 
@@ -70,18 +70,19 @@ Once your HDP cluster is deployed, at a minimum, install the following services 
 
 ## Install DSX Local
 
-Details - 3 node cluster. Include MMD for model deployment.
+https://content-dsxlocal.mybluemix.net/docs/content/local/welcome.html
 
-## Install DSX-HI to integrate DSX Local with HDP
+## Install DSX Hadoop Integration Service (DSXHI) to integrate DSX Local with HDP
 
-This sets up Livy.
+https://content-dsxlocal.mybluemix.net/docs/content/local/hadoopintegration.html
 
 # Steps
+
 Follow these steps to setup the proper environment to run our notebooks locally.
 
 1. [Clone the repo](#1-clone-the-repo)
 1. [Download and move data to HDFS on Hortonworks](#2-download-and-move-data-to-hdfs-on-hortonworks)
-1. [Create IBM DSX Local project](#3-create-ibm-dsx-local-project)
+1. [Create project in IBM DSX Local](#3-create-project-in-ibm-dsx-local)
 1. [Create project assets](#4-create-project-assets)
 1. [Run the notebooks to create our model](#5-run-the-notebooks-to-create-our-model)
 1. [Commit changes to DSX Local Master Repository](#6-commit-changes-to-dsx-local-master-repository)
@@ -92,6 +93,7 @@ Follow these steps to setup the proper environment to run our notebooks locally.
 1. [Gather API endpoints data for use in scripts](#11-gather-api-endpoints-data-for-use-in-scripts)
 1. [Modify scripts in DSX Local](#12-modify-scripts-in-dsx-local)
 1. [Run scripts locally to test](#13-run-scripts-locally-to-test)
+1. [Manage your model with the Deployment Manager](#14-manage-your-model-with-the-deployment-manager)
 
 ### 1. Clone the repo
 ```
@@ -101,25 +103,29 @@ git clone https://github.com/IBM/model-mgmt-on-dsx-local-and-hortonworks.git
 ### 2. Download and move data to HDFS on Hortonworks
 
 
-### 3. Create IBM DSX Local project
+### 3. Create project in IBM DSX Local
+
+In DSX Local, we use projects as a container for all of our related assets. To create a project:
 
 * From the DSX Local home page, select the `Add Project` button.
 
 ![](doc/source/images/dsx-local-project-list.png)
 
-* To create a project in DSX Local, give the project a name and press the `Create` button. 
+* Enter your project name and press the `Create` button.
 
 ![](doc/source/images/dsx-local-create-project.png)
 
 ### 4. Create project assets
 
-* Once created, you can view all of the project assets by selecting the `Assets` tab from the project's home page. 
+Once created, you can view all of the project assets by selecting the `Assets` tab from the project's home page.
 
 ![](doc/source/images/dsx-local-notebook-list.png)
 
-* Add our wine feature extraction and modeling notebooks into the project. Add the first notebook by selecting `Notebooks` in the project `Assets` list, then pressing the `Add Notebook` button.
+For our project, we need to add our notebooks and scripts. To add our notebooks:
 
-* Enter a notebook name and use the `From URL` option to load the notebook from the github repo.
+* Select `Notebooks` in the project `Assets` list, then press the `Add Notebook` button.
+
+* Enter a unique notebook name and use the `From URL` option to load the notebook from the github repo.
 
 ![](doc/source/images/dsx-local-create-notebook-1.png)
 
@@ -129,64 +135,73 @@ git clone https://github.com/IBM/model-mgmt-on-dsx-local-and-hortonworks.git
 https://raw.githubusercontent.com/IBM/model-mgmt-on-dsx-local-and-hortonworks/master/notebooks/pca-features.ipynb
 ```
 
-Repeat this step to add the second notebook, using the following URL:
+* Repeat this step to add the second notebook, using the following URL:
 ```
 https://raw.githubusercontent.com/IBM/model-mgmt-on-dsx-local-and-hortonworks/master/notebooks/pca-modeling.ipynb
 ```
 
-* Add our batch scripts into the project, one at a time, by selecting `Scripts` in the project `Assets` list, then pressing the `Add Script` button.
+To add our scripts:
+
+* Select `Scripts` in the project `Assets` list, then press the `Add Script` button.
 
 ![](doc/source/images/dsx-local-scripts-list.png)
 
-* Select the `From File` tab and use the `Drag and Drop` option to load the following script files:
+* Enter a unique script name and click on the `From File` tab. Use the `Drag and Drop` option to load the script file from your local repo.
 
+![](doc/source/images/dsx-local-create-script.png)
+
+* Add the following scripts:
 ```
 scripts/feature_engineering.py
 scripts/extract_and_score.py
 scripts/model_scoring.py
 ```
 
-![](doc/source/images/dsx-local-create-script.png)
-
 ### 5. Run the notebooks to create our model
 
-Run both notebooks to create and save our model.
-
-* From the `Notebooks` list, click on the notebook to launch the Jupyter notebook. Execute the `pca-features` notebook first, which reads in and transforms the wine data set. It also creates data files that will be required by the next notebook. Now execute the `pca-modeling` notebook, which generates and saves our data model.
+To view our notebooks, Select `Notebooks` in the project `Assets` list.
 
 ![](doc/source/images/dsx-local-notebook-list-2.png)
 
-When a notebook is executed, what is actually happening is that each code cell in
+First, some background on how executing a notebooks: 
+
+> When a notebook is executed, what is actually happening is that each code cell in
 the notebook is executed, in order, from top to bottom.
-
-Each code cell is selectable and is preceded by a tag in the left margin. The tag
+>
+> Each code cell is selectable and is preceded by a tag in the left margin. The tag
 format is `In [x]:`. Depending on the state of the notebook, the `x` can be:
-
-* A blank, this indicates that the cell has never been executed.
-* A number, this number represents the relative order this code step was executed.
-* A `*`, which indicates that the cell is currently executing.
-
-There are several ways to execute the code cells in your notebook:
-
-* One cell at a time.
-  * Select the cell, and then press the `Play` button in the toolbar.
-* Batch mode, in sequential order.
-  * From the `Cell` menu bar, there are several options available. For example, you
+>
+>* A blank, this indicates that the cell has never been executed.
+>* A number, this number represents the relative order this code step was executed.
+>* A `*`, which indicates that the cell is currently executing.
+>
+>There are several ways to execute the code cells in your notebook:
+>
+>* One cell at a time.
+>   * Select the cell, and then press the `Play` button in the toolbar.
+>* Batch mode, in sequential order.
+>   * From the `Cell` menu bar, there are several options available. For example, you
     can `Run All` cells in your notebook, or you can `Run All Below`, that will
     start executing from the first cell under the currently selected cell, and then
     continue executing all cells that follow.
-* At a scheduled time.
-  * Press the `Schedule` button located in the top right section of your notebook
+>* At a scheduled time.
+>   * Press the `Schedule` button located in the top right section of your notebook
     panel. Here you can schedule your notebook to be executed once at some future
     time, or repeatedly at your specified interval.
- 
-> Note: After executing the notebooks, you may be wondering why we just didn't combine all of the code into just a single notebook. The reason is simply to seperate out the the data building and transformation steps from the model creation and saving steps. This way we can run the first notebook in the future (when more test data is available) without generating a new model. In fact, if we did have new data, we would want to score it against the existing model first, then generate a new model if the results were not acceptable.
->
-> As you will see later, running the first notebook will be done by running a script in our project (`scripts/feature_engineering.py`). This script was initially created by loading the `pca-features` notebook into Jupyter, then exporting the notebook cells into a `python` script (use the menu options `File` -> `Download as` -> `Python (.py)`). We only had to modify the script slightly to include some code to handling data versioning. 
 
-Once the model is created, you can view it in the project `Asset` list. Note that it is given a default version number.
+To run a notebook, simply click on the notebook name from the `Notebooks` list.
+
+* Run the `pca-features` notebook first. It reads in and transforms the wine data set. It also creates data files that will be required by the next notebook.
+
+* Run the `pca-modeling` notebook, which generates and saves our data model.
+
+Once the model is created, you can view it by selecting `Models` in the project `Asset` list. Note that it is given a default version number.
 
 ![](doc/source/images/dsx-local-model-list.png)
+
+> Note: After executing the notebooks, you may be wondering why we just didn't combine all of the code into just a single notebook. The reason is simply to seperate out the the data processing steps from the model creation steps. This allows us to process any new data in the future without effecting our current model. In fact, this is exactly what should be done with any new data - score it against the current model first to determine if the results are still acceptable. If not, we can then run the second notebook to generate a new model.
+>
+> As you will see later, running the first notebook will be done by running a script in our project (`scripts/feature_engineering.py`). This script was initially created by loading the `pca-features` notebook into Jupyter, then exporting the notebook cells into a `python` script (use the menu options `File` -> `Download as` -> `Python (.py)`). We only had to modify the script slightly to include some code to handling data versioning.
 
 ### 6. Commit changes to DSX Local Master Repository
 
@@ -224,7 +239,7 @@ The IBM Deployment Manager provides the mechanism to deploy our model as a web s
 
 ![](doc/source/images/mmd-model-list.png)
 
-* On the model deployment screen, provide a name, reserve some CPUs and memory, then press `Create`.
+* On the model deployment screen, provide a unique name, reserve some CPUs and memory, then press `Create`.
 
 ![](doc/source/images/mmd-model-deploy.png)
 
@@ -234,7 +249,7 @@ The IBM Deployment Manager provides the mechanism to deploy our model as a web s
 
 ![](doc/source/images/mmd-script-details.png)
 
-* On the script deploy screen, provide a name, set the type to `Script run`, add `v1` as a command line argument, then press `Create`.
+* On the script deploy screen, provide a job name, set the type to `Script run`, add `v1` as a command line argument, then press `Create`.
 
 ![](doc/source/images/mmd-deploy-script.png)
 
@@ -297,7 +312,7 @@ scripts/extract_and_score.py
 
 ![](doc/source/images/dsx-local-modify-script.png)
 
-* For the `extract_and_score` script, substitute in the token and endpoint values. The endpoints values can be for either the `feature_engineering` or `model_scoring` deployment scripts. And the endpoints will end in either `/trigger` or `/statue`. The comments in the code will hopefully make it obvious which endpoint to use.
+* For the `extract_and_score` script, substitute in the token and endpoint values. The endpoints values are for the `feature_engineering` and `model_scoring` deployment scripts. If your enpoint ends with `/trigger`, remove it. The script will append both the `/trigger` and `/status` functions to both endpoints, as needed.
 
 ![](doc/source/images/dsx-local-modify-script-2.png)
 
@@ -334,13 +349,47 @@ Repeat this process to run the `model_scoring` script. And if that completes suc
 Once you have verified that all of the scripts are working, commit and push the changes 
 to the DSX Local Master Repository, as described above in [Step #6](#6-commit-changes-to-dsx-local-master-repository). Make sure you bump the version number.
 
+### 14. Manage your model with the Deployment Manager
 
-In Deployment Manager:
+Launch the IBM Deployment Manager by selecting it from the main drop-down menu on the DSX Local home page.
 
-- Run update to get latest version
-- Run scripts to generate files in MMD
+![](doc/source/images/mmd-launch-option.png)
+
+First we need to update our release project to grab all of the latest versions of our scripts.
+
+* From the Deployment Manager home page, click on our project tile.
+
+* From the row of icons listed in the page banner, click on the `Update` icon.
+
+* From the update screen, use the `Source project` drop-down menu to select our DSX Local project. Then select the version tag associated with our latest commit.
+
+Now that all of our assets are updated, we can actually manage our model by tracking its use and performance.
+
+To get the ball rolling, let's start by running our `extract_and_score` script. As explained previously, this will read in the current wine csv file and transform it, then score each wine against our model.
+
+* From the `Asset` page, select the `extract_and_score` script. From the detail page, click on the script name to bring up the script launch page. Then click on the `API` tab.
+
+![](doc/source/images/mmd-script-launch-overview.png)
+
+* Note that the `Command line arguments` value is set to `v1`. You can set this to anything you want, but it will be appended to the file names generated by this script. This is how to avoid overridding the data from previous runs of this script.
+
+* To run the script, click on the `Overview` tab and scroll down to the `Runs` section of the page. Then click the `run now` button.
+
+* From the start dialog, enter a name, modify the command line argument if needed, then click the `Run` button.
+
+![](doc/source/images/mmd-script-launch-job.png)
+
+* You can view the status of the job from the same panel. In the case of the `extract-and-score` script, three separate jobs will be launched (the main script, and the calls to the other scripts). 
+
+![](doc/source/images/mmd-final-status.png)
+
+Now that the model has been accessed, we can monitor ...
 
 # Troubleshooting
+
+* An error was encountered: Session XX unexpectedly reached final status 'dead'. See logs: java.lang.Exception: No YARN application is found with tag livy-session-XX in 120 seconds. Please check your cluster status, it is may be very busy.
+
+If you see this error trying to start a remote Spark session (which is attempted in the pca-features notebook), it may indicate that the username that you logged into DSX Local with has not been registered on the HDP Hadoop cluster.
 
 # Links
 

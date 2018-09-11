@@ -3,18 +3,17 @@
 import requests
 import sys
 
-END_ENDPOINT = '<<add feature_engineering endpoint>'
-MODEL_ENDPOINT = '<add model_scoring endpoint>'
-
+AUTH_TOKEN = '<add authorization token>'
+MODEL_SCORING_ENDPOINT = '<add model_scoring script endpoint>'
+FEATURE_ENGINEERING_ENDPOINT = '<add feature_engineering script endpoint>'
 
 args = sys.argv[1]
 
 body = {"env":[],"args":[args]} 
-body
 
-header = {'Content-Type': 'application/json','Cache-Control': 'no-cache','Authorization': '<add token>'}
+header = {'Content-Type': 'application/json','Cache-Control': 'no-cache','Authorization': AUTH_TOKEN}
 
-url_ef = END_ENDPOINT + '/trigger'
+url_ef = FEATURE_ENGINEERING_ENDPOINT + '/trigger'
 
 extract_features = requests.post(url=url_ef,json=body,headers=header,verify=False)
 
@@ -34,7 +33,7 @@ print status_ef
 
 body_sc = {}
 
-url_sc1 = END_ENDPOINT + '/status/' + jobId_ef
+url_sc1 = FEATURE_ENGINEERING_ENDPOINT + '/status/' + jobId_ef
 
 import time
 
@@ -57,7 +56,7 @@ while status_ef == 'Waiting' or status_ef == 'Running' or status_ef == 'Pending'
 
 if status_ef == 'Succeeded':
 
-  url_ms = MODEL_ENDPOINT + '/trigger'
+  url_ms = MODEL_SCORING_ENDPOINT + '/trigger'
   
   model_scoring = requests.post(url=url_ms,json=body,headers=header,verify=False)
   
@@ -79,7 +78,7 @@ print jobId_ms
 status_ms = str(result_ms['jobExecution']['result'])
 print status_ms
 
-url_sc2 = MODEL_ENDPOINT + '/status/'+jobId_ms
+url_sc2 = MODEL_SCORING_ENDPOINT + '/status/' + jobId_ms
 
 while status_ms == 'Waiting' or status_ms == 'Running' or status_ms == 'Pending':
 
