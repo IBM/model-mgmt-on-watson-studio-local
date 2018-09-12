@@ -26,15 +26,15 @@ To illustrate this, an example data science workflow which classifies 3 differen
 
 This repo contains two Jupyter notebooks illustrating how to extract features and build a model on the [wine classification data set](https://www.kaggle.com/brynja/wineuci). The data contains a list of wines with their associated chemical features and assigned wine classification. There are three scripts in the repo to automate the feature extraction, score the extracted features and combine the two steps as one wrapper respectively.
 
-The first notebook uses feature engineering techniques such as PCA and standard scaling to extarct the features for the model development from wine dataset in HDP.
+* The first notebook uses feature engineering techniques such as PCA and standard scaling to extarct the features for the model development from wine dataset in HDP
 
-The second notebook trains, builds and saves a model that can be scored. The model can then be deployed and accessed remotely.
+* The second notebook trains, builds and saves a model that can be scored. The model can then be deployed and accessed remotely
 
-The first script is simply a replica of the first notebook as the .py script which can be scheduled to extract the features periodically and save them in HDP with version numbers.
+* The first script is simply a replica of the first notebook as the .py script which can be scheduled to extract the features periodically and save them in HDP with version numbers
 
-The second script is used to score the set of extracted features on the deployed model and save the results in HDP with versioning.
+* The second script is used to score the set of extracted features on the deployed model and save the results in HDP with versioning
 
-The third script is simply a wrapper script that runs the above two scripts one after the other and used to automate the feature extarction and model scoring in one run.
+* The third script is simply a wrapper script that runs the above two scripts one after the other and used to automate the feature extarction and model scoring in one run
 
 In the IBM deployment manager, all three scripts are deployed as a service both as batch and API which can be used to automate the feature extarction and scoring in production.
 
