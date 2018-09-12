@@ -43,7 +43,7 @@ When you have completed this code pattern, you will understand how to:
 * Connect data from HDP to DSX Local and to extract features using PCA and other techniques
 * Build, Train, and Save a model from the extracted features using DSX Local
 * Use the DSX Local Deployment Manager to deploy and access your model in batch and API mode
-* How to automate the feature extraction and model scoring using the scripts that are deployed as a service in batch and API mode
+* Automate the feature extraction and model scoring using the scripts that are deployed as a service in batch and API mode
 
 ## Flow
 
