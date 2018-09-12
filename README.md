@@ -6,13 +6,13 @@ The goal of this code pattern is to demonstrate how data scientists can leverage
 
 * Batch scoring of the extracted features on the deployed model in IBM Deployment Manager
 
-To illustrate this, an example data science workflow which classifies 3 different wine categories from the chemical properties of those wines is used in this code pattern
+To illustrate this, an example data science workflow which classifies 3 different wine categories from the chemical properties of those wines is used in this code pattern.
 
 * For feature extraction, Principal component analysis (PCA) is applied on the wine classification datatset and two principal components are extarcted
 
 * For the classification model, Logistic regression (a popular machine learning model) is applied on the extracted components to predict the wine categories
 
-> **What is PCA?** Principal component analysis (PCA) is a popular dimensionality reduction technique which is used to reduce N number of numerical variables into few principal components that are used as features in the machine learning model. These prinicpal components capture a major percentage of the combined variance effect of all the variables
+> **What is PCA?** Principal component analysis (PCA) is a popular dimensionality reduction technique which is used to reduce N number of numerical variables into few principal components that are used as features in the machine learning model. These prinicpal components capture a major percentage of the combined variance effect of all the variables.
 
 > **What is HDP?** Hortonworks Data Platform (HDP) is a massively scalable platform for storing, processing and analyzing large volumes of data. HDP consists of the essential set of Apache Hadoop projects including MapReduce, Hadoop Distributed File System (HDFS), HCatalog, Pig, Hive, HBase, Zookeeper and Ambari.
 
@@ -24,17 +24,26 @@ To illustrate this, an example data science workflow which classifies 3 differen
 
 > **What is the IBM Deployment Manager?** The Deployment Manager is a DSX Local tool that provides users the ability to create and train machine learning models. Users can also deploy their models to make them available to a wider audience.
 
-This repo contains two Jupyter notebooks illustrating how to use Spark for training and scoring a model built on a [wine classification data set](https://www.kaggle.com/brynja/wineuci). The data contains a list of wines with their associated chemical features and assigned wine classification.
+This repo contains two Jupyter notebooks illustrating how to extract features and build a model on the [wine classification data set](https://www.kaggle.com/brynja/wineuci). The data contains a list of wines with their associated chemical features and assigned wine classification. There are three scripts in the repo to automate the feature extraction, score the extracted features and combine the two steps as one wrapper respectively.
 
-The first notebook uses various machine learning techniques to reduce the number of features required to accurately classify any particular wine.
+The first notebook uses feature engineering techniques such as PCA and standard scaling to extarct the features for the model development from wine dataset in HDP.
 
 The second notebook trains, builds and saves a model that can be scored. The model can then be deployed and accessed remotely.
 
+The first script is simply a replica of the first notebook as the .py script which can be scheduled to extract the features periodically and save them in HDP with version numbers.
+
+The second script is used to score the set of extracted features on the deployed model and save the results in HDP with versioning.
+
+The third script is simply a wrapper script that runs the above two scripts one after the other and used to automate the feature extarction and model scoring in one run.
+
+In the IBM deployment manager, all three scripts are deployed as a service both as batch and API which can be used to automate the feature extarction and scoring in production.
+
 When you have completed this code pattern, you will understand how to:
 
-* Load data into Spark DataFrames and use Spark's machine learning library (MLlib) to train a PCA classification model
-* Build, Train, and Save a model using DSX Local
-* Use the DSX Local Deployment Manager to deploy and access your model in batch mode
+* Connect data from HDP to DSX Local and to extract features using PCA and other techniques
+* Build, Train, and Save a model from the extracted features using DSX Local
+* Use the DSX Local Deployment Manager to deploy and access your model in batch and API mode
+* How to automate the feature extraction and model scoring using the scripts that are deployed as a service in batch and API mode
 
 ## Flow
 
