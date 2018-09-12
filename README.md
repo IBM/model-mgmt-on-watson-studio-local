@@ -1,8 +1,18 @@
-# Develop and Deploy a PCA Model using Data Science Expericence Local and Hortonworks Data Platform 
+# Automated Feature Engineering and Model Scoring using Data Science Expericence Local and Hortonworks Data Platform 
 
-Principal component analysis (PCA) is a popular machine learning tool used to create predictive models by reducing the number of features in a data set. 
+The goal of this code pattern is to demonstrate how data scientists can leverage IBM's Data Science Experience Local (DSX Local) and the Hortonworks Data Platform (HDP) to automate the
 
-The goal of this code pattern is to demonstrate the key integration points that allow data scientists to run IBM's Data Science Experience Local (DSX Local) built on the Hortonworks Data Platform (HDP).
+* Periodic extraction of features (used to train the machine learning model) from distributed datasets in HDP
+
+* Batch scoring of the extracted features on the deployed model in IBM Deployment Manager
+
+To illustrate this, an example data science workflow which classifies 3 different wine categories from the chemical properties of those wines is used in this code pattern
+
+* For feature extraction, Principal component analysis (PCA) is applied on the wine classification datatset and two principal components are extarcted
+
+* For the classification model, Logistic regression (a popular machine learning model) is applied on the extracted components to predict the wine categories
+
+> **What is PCA?** Principal component analysis (PCA) is a popular dimensionality reduction technique which is used to reduce N number of numerical variables into few principal components that are used as features in the machine learning model. These prinicpal components capture a major percentage of the combined variance effect of all the variables
 
 > **What is HDP?** Hortonworks Data Platform (HDP) is a massively scalable platform for storing, processing and analyzing large volumes of data. HDP consists of the essential set of Apache Hadoop projects including MapReduce, Hadoop Distributed File System (HDFS), HCatalog, Pig, Hive, HBase, Zookeeper and Ambari.
 
