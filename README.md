@@ -1,4 +1,4 @@
-# Automated Feature Engineering and Model Scoring using Data Science Expericence Local and Deployment Manager
+# Automated Feature Engineering and Model Scoring using Data Science Experience Local and Deployment Manager
 
 The goal of this code pattern is to demonstrate how data scientists can leverage IBM's Data Science Experience Local (DSX Local) and Deployment Manager to automate the:
 
