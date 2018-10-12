@@ -1,10 +1,10 @@
-# Automated Feature Engineering and Model Scoring using Data Science Experience Local and Deployment Manager
+# Automated Feature Engineering and Model Scoring using IBM Watson Studio Local
 
-The goal of this code pattern is to demonstrate how data scientists can leverage IBM's Data Science Experience Local (DSX Local) and Deployment Manager to automate the:
+The goal of this code pattern is to demonstrate how data scientists can leverage IBM's Watson Studio Local to automate the:
 
 * Periodic extraction of features (used to train the machine learning model) from distributed datasets.
 
-* Batch scoring of the extracted features on the deployed model in DSX Deployment Manager.
+* Batch scoring of the extracted features on the deployed model.
 
 To illustrate this, an example data science workflow which classifies 3 different wine categories from the chemical properties of those wines is used in this code pattern.
 
@@ -14,9 +14,9 @@ To illustrate this, an example data science workflow which classifies 3 differen
 
 > **What is PCA?** Principal component analysis (PCA) is a popular dimensionality reduction technique which is used to reduce N number of numerical variables into few principal components that are used as features in the machine learning model. These prinicpal components capture a major percentage of the combined variance effect of all the variables.
 
-> **What is IBM DSX Local?** DSX Local is an on premises solution for data scientists and data engineers. It offers a suite of data science tools that integrate with RStudio, Spark, Jupyter, and Zeppelin notebook technologies.
+> **What is IBM Watson Studio Local?** Watson Studio Local is an on premises solution for data scientists and data engineers. It offers a suite of data science tools that integrate with RStudio, Spark, Jupyter, and Zeppelin notebook technologies.
 
-> **What is the IBM Deployment Manager?** The Deployment Manager is a DSX Local tool that provides users the ability to create and train machine learning models. Users can also deploy their models to make them available to a wider audience.
+> **What is the IBM Watson Machine Learning?** Watson Machine Learning is a Watson Studio Local tool that provides users the ability to create and train machine learning models. Users can also deploy their models to make them available to a wider audience.
 
 This repo contains two Jupyter notebooks illustrating how to extract features and build a model on the [wine classification data set](https://www.kaggle.com/brynja/wineuci). The data contains a list of wines with their associated chemical features and assigned wine classification. There are three scripts in the repo to automate the feature extraction, score the extracted features and combine the two steps as one wrapper respectively.
 
@@ -30,13 +30,13 @@ This repo contains two Jupyter notebooks illustrating how to extract features an
 
 * The third script is simply a wrapper script that runs the above two scripts one after the other and used to automate the feature extarction and model scoring in one run.
 
-In the DSX Local Deployment Manager, all three scripts are deployed as a service both as batch and API which can be used to automate the feature extarction and scoring in production.
+Using the Watson Machine Learning feature in Watson Studio, all three scripts are deployed as a service to automate feature extraction and scoring in production.
 
 When you have completed this code pattern, you will understand how to:
 
-* Use DSX Local and to extract features using PCA and other techniques.
-* Build, Train, and Save a model from the extracted features using DSX Local.
-* Use the DSX Local Deployment Manager to deploy and access your model in batch and API mode
+* Use Watson Studio Local and to extract features using PCA and other techniques.
+* Build, Train, and Save a model from the extracted features using Watson Studio Local.
+* Use the Watson Machine Learning feature to deploy and access your model in batch and API mode
 * Automate the feature extraction and model scoring using the scripts that are deployed as a service in batch and API mode.
 
 ## Flow
@@ -44,13 +44,13 @@ When you have completed this code pattern, you will understand how to:
 ![](doc/source/images/architecture.png)
 
 1. Use Spark DataFrame operations to clean the dataset and use Spark MLlib to train a PCA classification model.
-2. Save the resulting model into DSX Local.
-3. The user can run the provided notebooks in DSX Local.
-4. Use DSX Local Deployment Manager to deploy and access the model to generate wine classification.
+2. Save the resulting model into Watson Studio Local.
+3. The user can run the provided notebooks in Watson Studio Local.
+4. Use the Watson Machine Learning feature to deploy and access the model to generate wine classification.
 
 ## Included components
 
-* [IBM Data Science Experience Local](https://content-dsxlocal.mybluemix.net/docs/content/local/overview.html): An out-of-the-box on premises solution for data scientists and data engineers. It offers a suite of data science tools that integrate with RStudio, Spark, Jupyter, and Zeppelin notebook technologies.
+* [IBM Watson Studio Local](https://content-dsxlocal.mybluemix.net/docs/content/local/overview.html): An out-of-the-box on premises solution for data scientists and data engineers. It offers a suite of data science tools that integrate with RStudio, Spark, Jupyter, and Zeppelin notebook technologies.
 * [Apache Spark](http://spark.apache.org/): An open-source, fast and general-purpose cluster computing system.
 * [Jupyter Notebooks](http://jupyter.org/): An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.
 
@@ -61,7 +61,9 @@ When you have completed this code pattern, you will understand how to:
 
 # Prerequisites
 
-## Install DSX Local
+## Install Watson Studio Local
+
+Watson Studio Local provides a suite of data science tools, such as Spark and Jupyter notebooks, that are needed to complete this code pattern. Use the following link to install and configure your Watson Studio Local instance.
 
 https://content-dsxlocal.mybluemix.net/docs/content/local/welcome.html
 
@@ -70,41 +72,41 @@ https://content-dsxlocal.mybluemix.net/docs/content/local/welcome.html
 Follow these steps to setup the proper environment to run our notebooks locally.
 
 1. [Clone the repo](#1-clone-the-repo)
-1. [Create project in IBM DSX Local](#2-create-project-in-ibm-dsx-local)
+1. [Create project in IBM Watson Studio Local](#2-create-project-in-ibm-watson-studio-local)
 1. [Create project assets](#3-create-project-assets)
 1. [Run the notebooks to create our model](#4-run-the-notebooks-to-create-our-model)
-1. [Commit changes to DSX Local Master Repository](#5-commit-changes-to-dsx-local-master-repository)
-1. [Create release project in IBM Deployment Manager](#6-create-release-project-in-ibm-deployment-manager)
+1. [Commit changes to Watson Studio Local Master Repository](#5-commit-changes-to-watson-studio-local-master-repository)
+1. [Create release project in IBM Watson Machine Learning](#6-create-release-project-in-ibm-watson-machine-learning)
 1. [Deploy our model as a web service](#7-deploy-our-model-as-a-web-service)
 1. [Deploy our scripts as a job](#8-deploy-our-scripts-as-a-job)
 1. [Bring deployments on-line](#9-bring-deployments-on-line)
 1. [Gather API endpoints data for use in scripts](#10-gather-api-endpoints-data-for-use-in-scripts)
-1. [Modify scripts in DSX Local](#11-modify-scripts-in-dsx-local)
+1. [Modify scripts in Watson Studio Local](#11-modify-scripts-in-watson-studio-local)
 1. [Run scripts locally to test](#12-run-scripts-locally-to-test)
-1. [Manage your model with the Deployment Manager](#13-manage-your-model-with-the-deployment-manager)
+1. [Manage your model with IBM Watson Machine Learning](#13-manage-your-model-with-ibm-watson-machine-learning)
 
 ### 1. Clone the repo
 ```
-git clone https://github.com/IBM/model-mgmt-on-dsx-local-and-hortonworks.git
+git clone https://github.com/IBM/model-mgmt-on-watson-studio-local.git
 ```
 
-### 2. Create project in IBM DSX Local
+### 2. Create project in IBM Watson Studio Local
 
-In DSX Local, we use projects as a container for all of our related assets. To create a project:
+In Watson Studio Local, we use projects as a container for all of our related assets. To create a project:
 
-* From the DSX Local home page, select the `Add Project` button.
+* From the Watson Studio Local home page, select the `Add Project` button.
 
-![](doc/source/images/dsx-local-project-list.png)
+![](doc/source/images/studio-project-list.png)
 
 * Enter your project name and press the `Create` button.
 
-![](doc/source/images/dsx-local-create-project.png)
+![](doc/source/images/studio-create-project.png)
 
 ### 3. Create project assets
 
 Once created, you can view all of the project assets by selecting the `Assets` tab from the project's home page.
 
-![](doc/source/images/dsx-local-notebook-list.png)
+![](doc/source/images/studio-notebook-list.png)
 
 For our project, we need to add our notebooks and scripts. To add our notebooks:
 
@@ -112,28 +114,32 @@ For our project, we need to add our notebooks and scripts. To add our notebooks:
 
 * Enter a unique notebook name and use the `From URL` option to load the notebook from the github repo.
 
-![](doc/source/images/dsx-local-create-notebook-1.png)
+* Select `Environment` that runs under `Python v3.1` or greater.
+
+>NOTE: To make it easier to follow along with the remaining instructions, it is recommended that you set `Name` to match the name of the notebook in the uploaded file. 
+
+![](doc/source/images/studio-create-notebook-1.png)
 
 * Enter this URL:
 
 ```
-https://raw.githubusercontent.com/IBM/model-mgmt-on-dsx-local-and-hortonworks/master/notebooks/pca-features.ipynb
+https://raw.githubusercontent.com/IBM/model-mgmt-on-watson-studio-local/master/notebooks/pca-features.ipynb
 ```
 
 * Repeat this step to add the second notebook, using the following URL:
 ```
-https://raw.githubusercontent.com/IBM/model-mgmt-on-dsx-local-and-hortonworks/master/notebooks/pca-modeling.ipynb
+https://raw.githubusercontent.com/IBM/model-mgmt-on-watson-studio-local/master/notebooks/pca-modeling.ipynb
 ```
 
 To add our scripts:
 
 * Select `Scripts` in the project `Assets` list, then press the `Add Script` button.
 
-![](doc/source/images/dsx-local-scripts-list.png)
+![](doc/source/images/studio-scripts-list.png)
 
-* Enter a unique script name and click on the `From File` tab. Use the `Drag and Drop` option to load the script file from your local repo.
+* Click on the `From File` tab and then use the `Drag and Drop` option to load the script file from your local repo. The script name will be pre-populated with the name of the uploaded file. Select Python version 3.
 
-![](doc/source/images/dsx-local-create-script.png)
+![](doc/source/images/studio-create-script.png)
 
 * Add the following scripts:
 ```
@@ -142,11 +148,19 @@ scripts/extract_and_score.py
 scripts/model_scoring.py
 ```
 
+To add our data set:
+
+* Select `Data sets` in the project `Assets` list, then press the `Add Data Set` button.
+
+![](doc/source/images/studio-dataset-list.png)
+
+From the `Local File` tab, click the `Select from your local file system` button to select the file `/data/Wine.csv` from your local repo.
+
 ### 4. Run the notebooks to create our model
 
 To view our notebooks, Select `Notebooks` in the project `Assets` list.
 
-![](doc/source/images/dsx-local-notebook-list-2.png)
+![](doc/source/images/studio-notebook-list-2.png)
 
 First, some background on how executing a notebooks: 
 
@@ -182,61 +196,61 @@ To run a notebook, simply click on the notebook name from the `Notebooks` list.
 
 Once the model is created, you can view it by selecting `Models` in the project `Asset` list. Note that it is given a default version number.
 
-![](doc/source/images/dsx-local-model-list.png)
+![](doc/source/images/studio-model-list.png)
 
 > Note: After executing the notebooks, you may be wondering why we just didn't combine all of the code into just a single notebook. The reason is simply to seperate out the the data processing steps from the model creation steps. This allows us to process any new data in the future without effecting our current model. In fact, this is exactly what should be done with any new data - score it against the current model first to determine if the results are still acceptable. If not, we can then run the second notebook to generate a new model.
 >
 > As you will see later, running the first notebook will be done by running a script in our project (`scripts/feature_engineering.py`). This script was initially created by loading the `pca-features` notebook into Jupyter, then exporting the notebook cells into a `python` script (use the menu options `File` -> `Download as` -> `Python (.py)`). We only had to modify the script slightly to include some code to handling data versioning.
 
-### 5. Commit changes to DSX Local Master Repository
+### 5. Commit changes to Watson Studio Local Master Repository
 
-After making changes to your project, you will be occasionally reminded to commit and push your changes to the DSX Local Master Repoisory.
+After making changes to your project, you will be occasionally reminded to commit and push your changes to the Watson Studio Local Master Repoisory.
 
-![](doc/source/images/dsx-local-commit-request.png)
+![](doc/source/images/studio-commit-request.png)
 
 Now that we have added our notebooks and scripts, and generated our model, let's go ahead and do that. Commit and push all of our new assets, and set the version tag to `v1.0`.
 
-![](doc/source/images/dsx-local-push-project.png)
+![](doc/source/images/studio-push-project.png)
 
-### 6. Create release project in IBM Deployment Manager
+### 6. Create release project in IBM Watson Machine Learning
 
-The IBM Deployment Manager provides the mechanism to deploy our model as a web service. It manages `Project Releases`, which we will now create.
+IBM Watson Machine Learning provides the mechanism to deploy our model as a web service. It manages `Project Releases`, which we will now create.
 
-* Launch the IBM Deployment Manager by selecting it from the main drop-down menu on the DSX Local home page.
+* Launch the IBM Watson Machine Learning tool by selecting it from the main drop-down menu on the Watson Studio Local home page.
 
-![](doc/source/images/mmd-launch-option.png)
+![](doc/source/images/studio-to-ml-option.png)
 
 * From the `Project releases` page, press the `Add Project Release` button.
 
-![](doc/source/images/mmd-project-list.png)
+![](doc/source/images/ml-project-list.png)
 
 * Select our previously committed project from the `Source project` drop-down list, and select the version tag you assigned to the project. Give the release a `Name` and a `Route` (which can be any random string), and the press `Create`.
 
-![](doc/source/images/mmd-create-project.png)
+![](doc/source/images/ml-create-project.png)
 
 * If you click on the `Assets` tab, you will see all of the assets associated with the project.
 
-![](doc/source/images/mmd-project-assets.png)
+![](doc/source/images/ml-project-assets.png)
 
 ### 7. Deploy our model as a web service
 
 * Select the model from the list of `Assets` associated with our project. From the model details panel, press the `web service` button.
 
-![](doc/source/images/mmd-model-list.png)
+![](doc/source/images/ml-model-list.png)
 
 * On the model deployment screen, provide a unique name, reserve some CPUs and memory, then press `Create`.
 
-![](doc/source/images/mmd-model-deploy.png)
+![](doc/source/images/ml-model-deploy.png)
 
 ### 8. Deploy our scripts as a job
 
 * From the details panel for the `feature_engineering.py` script, press the `job` button. 
 
-![](doc/source/images/mmd-script-details.png)
+![](doc/source/images/ml-script-details.png)
 
 * On the script deploy screen, provide a job name, set the type to `Script run`, add `v1` as a command line argument, then press `Create`.
 
-![](doc/source/images/mmd-deploy-script.png)
+![](doc/source/images/ml-script-deploy.png)
 
 Repeat these steps for the remaining 2 scripts.
 
@@ -244,11 +258,11 @@ Repeat these steps for the remaining 2 scripts.
 
 If you select the `Deployments` tab from the project page, you will notice that all of the deployments are listed as disabled.
 
-![](doc/source/images/mmd-deployments-disabled.png)
+![](doc/source/images/ml-deployments-disabled.png)
 
-To bring the deployments on-line, press the `Play` button icon, which is the left-most icon listed at the top of the page. Once you complete the action, you should see the following.
+To bring the deployments on-line, press the `Launch` button icon, which is the left-most icon listed at the top of the page. Once you complete the action, you should see the following.
 
-![](doc/source/images/mmd-deployments-enabled.png)
+![](doc/source/images/ml-deployments-enabled.png)
 
 > Note: you may have to manually `Enable` the model deployment by using the menu options listed on the right side of the model row in the deployments table.
 
@@ -271,21 +285,21 @@ To access the deployed model or scripts, we need to gather the associated API en
 
 To get the endpoint for our deployed model, click on the model from the `Assets` tab of the project page.  
 
-![](doc/source/images/mmd-model-api.png)
+![](doc/source/images/ml-model-api.png)
 
-The endpoint is listed at the top of the page. Both the `Endpoint` and the `Deployment Token` can be saved to the clipboard by clicking on their respective ![](doc/source/images/mmd-clipboard.png) icons.
+The endpoint is listed at the top of the page. Both the `Endpoint` and the `Deployment Token` can be saved to the clipboard by clicking on their respective ![](doc/source/images/ml-clipboard.png) icons.
 
 Repeat this step to retrieve the endpoints for both the `feature_engineering` and `model_scoring` scripts. 
 
 > Note: You will only need to get one copy of the `Deployment Token`. It will be the same for all deployments within this project.
 
-### 11. Modify scripts in DSX Local
+### 11. Modify scripts in Watson Studio Local
 
-Once we have gathered our deployment endpoints and deployment token, we need to go back to `DSX Local` mode so that we can modify and test our scripts.
+Once we have gathered our deployment endpoints and deployment token, we need to go back to `Watson Studio Local` mode so that we can modify and test our scripts.
 
-![](doc/source/images/mmd-launch-option-dsx.png)
+![](doc/source/images/ml-to-studio-option.png)
 
-Go to the `Assets` list for the project, and select `Scripts`. Click on a script file to open it up in edit mode. 
+Go to the `Assets` list for the project, and select `Scripts`. Click on a script file to open it up in edit mode.
 
 The scripts we will be modifying are those that reference deployment objects. These are:
 
@@ -293,60 +307,65 @@ The scripts we will be modifying are those that reference deployment objects. Th
 scripts/model_scoring.py
 scripts/extract_and_score.py
 ```
-* For the `model_scoring` script, substitute in the token and endpoint values.
+* For the `model_scoring` script, substitute in the token and endpoint values, then save the new version of the script.
 
-![](doc/source/images/dsx-local-modify-script.png)
+![](doc/source/images/studio-modify-script-1.png)
 
-* For the `extract_and_score` script, substitute in the token and endpoint values. The endpoints values are for the `feature_engineering` and `model_scoring` deployment scripts. If your enpoint ends with `/trigger`, remove it. The script will append both the `/trigger` and `/status` functions to both endpoints, as needed.
+* For the `extract_and_score` script, substitute in the token and endpoint values. The endpoint values are for the `feature_engineering` and `model_scoring` deployment scripts.
 
-![](doc/source/images/dsx-local-modify-script-2.png)
+    > Important: The endpoints will end with the string `/trigger`. Delete that portion of the URL as the script will append either `/trigger` or `/status` to the endpoints, as needed.
+
+* Finish by saving the new version of the script.
+
+![](doc/source/images/studio-modify-script-2.png)
 
 ### 12. Run scripts locally to test
 
-To avoid having to go back and forth between DSX Local and the Deployment Manager (which includes re-deploying with creating new release versions), make sure the scripts run locally in DSX Local first.
+To avoid having to go back and forth between Watson Studio Local and Watson Machine Learning (which includes re-deploying and creating new release versions), make sure the scripts run locally in Watson Studio Local first.
 
 * From the project page, click on `Scripts` in the `Assets` list.  
 
-![](doc/source/images/dsx-local-scripts-list-full.png)
+![](doc/source/images/studio-scripts-list-full.png)
 
 Start with the script `feature_engineering`. Use the menu bar on the right side of the script row to `Create Job` and run the script.
 
 In the `Create Job` run panel, provide a unique name and make sure you use the following options:
   * Type: `Script Run`
-  * Target host: `Local instance`
+  * Worker: `Python 3`
   * Source asset: `/scripts/feature_engineering.py`
   * Command line arguments: `v1`
+  * Scheduled to run: `On demand`
 
 After you press the `Create` button, you will see the run panel. 
 
-![](doc/source/images/dsx-local-script-run.png)
+![](doc/source/images/studio-script-run.png)
 
 If you scroll down a bit, you will see a `Run Now` button. Click it to start the script. Again, you will be presented with a dialog that requires you give it a run name. The rest of the values will be defaulted to values you already set, so they do not need to be modified. Click the `Run` button to run the script.
 
 You will be transferred back to the run panel where you can see the status (listed under `Duration`) and a tail of the log file. Once completed successfully, you should see 2 new files listed under `Data sets` in the `Assets` list.
 
-![](doc/source/images/dsx-local-data-sets-list.png)
+![](doc/source/images/studio-data-sets-list.png)
 
-> Note: The created data files (`target` and `features`) have a version tag appended to their name. This matches the command line argument we passed into the script.
+> Note: The created data files (`target` and `features`) will have a version tag appended to their name. This matches the command line argument we passed into the script.
 
 Repeat this process to run the `model_scoring` script. And if that completes successfully, run the `extract_and_score` script.
 
 Once you have verified that all of the scripts are working, commit and push the changes 
-to the DSX Local Master Repository, as described above in [Step #6](#6-commit-changes-to-dsx-local-master-repository). Make sure you bump the version number.
+to the Watson Studio Master Repository, as described above in [Step #5](#5-commit-changes-to-watson-studio-local-master-repository). Make sure you bump the version number.
 
-### 13. Manage your model with the Deployment Manager
+### 13. Manage your model with IBM Watson Machine Learning
 
-Launch the IBM Deployment Manager by selecting it from the main drop-down menu on the DSX Local home page.
+Launch IBM Watson Machine Learning by selecting it from the main drop-down menu on the Watson Studio Local home page.
 
-![](doc/source/images/mmd-launch-option.png)
+![](doc/source/images/studio-to-ml-option.png)
 
 First we need to update our release project to grab all of the latest versions of our scripts.
 
-* From the Deployment Manager home page, click on our project tile.
+* From the Watson Machine Learning home page, click on our project tile.
 
 * From the row of icons listed in the page banner, click on the `Update` icon.
 
-* From the update screen, use the `Source project` drop-down menu to select our DSX Local project. Then select the version tag associated with our latest commit.
+* From the update screen, use the `Source project` drop-down menu to select our Watson Studio Local project. Then select the version tag associated with our latest commit.
 
 Now that all of our assets are updated, we can actually manage our model by tracking its use and performance.
 
@@ -354,7 +373,7 @@ To get the ball rolling, let's start by running our `extract_and_score` script. 
 
 * From the `Asset` page, select the `extract_and_score` script. From the detail page, click on the script name to bring up the script launch page. Then click on the `API` tab.
 
-![](doc/source/images/mmd-script-launch-overview.png)
+![](doc/source/images/ml-script-launch-overview.png)
 
 * Note that the `Command line arguments` value is set to `v1`. You can set this to anything you want, but it will be appended to the file names generated by this script. This is how to avoid overridding the data from previous runs of this script.
 
@@ -362,7 +381,7 @@ To get the ball rolling, let's start by running our `extract_and_score` script. 
 
 * From the start dialog, enter a name, modify the command line argument if needed, then click the `Run` button.
 
-![](doc/source/images/mmd-script-launch-job.png)
+![](doc/source/images/ml-script-launch-job.png)
 
 * You can view the status of the job from the same panel. In the case of the `extract-and-score` script, three separate jobs will be launched (the main script, and the calls to the other scripts). 
 

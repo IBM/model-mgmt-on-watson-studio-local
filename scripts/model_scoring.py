@@ -33,7 +33,7 @@ for i in range(len(features)):
                                    verify=False)
 
     scoring_response = submit_request.json()
-    predicted_value = int(scoring_response["result"][0][-3])
+    predicted_value = int(scoring_response["result"]["predictions"][0])
     predictions = predictions.append(pd.Series(predicted_value))
 
 features = features[["0", "1"]]

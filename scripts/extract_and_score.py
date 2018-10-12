@@ -19,6 +19,9 @@ header = {'Content-Type': 'application/json',
 
 url_ef = FEATURE_ENGINEERING_ENDPOINT + '/trigger'
 
+print("Run feature engineering")
+print("url_ef = ", url_ef)
+
 extract_features = requests.post(url=url_ef,
                                  json=body,
                                  headers=header,
@@ -32,14 +35,19 @@ print(response_ef)
 result_ef = response_ef["result"]
 
 jobId_ef = str(result_ef['jobExecution']['runId'])
-print(jobId_ef)
+#print(jobId_ef)
+print("jobId_ef = ", jobId_ef)
 
 status_ef = str(result_ef['jobExecution']['result'])
-print(status_ef)
+#print(status_ef)
+print("status_ef = ", status_ef)
 
 body_sc = {}
 
 url_sc1 = FEATURE_ENGINEERING_ENDPOINT + '/status/' + jobId_ef
+print("url_sc1 = ", url_sc1)
+
+print("Check status of feature engineering")
 
 while status_ef == 'Waiting' or \
       status_ef == 'Running' or \
