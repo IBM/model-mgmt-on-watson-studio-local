@@ -190,7 +190,7 @@ format is `In [x]:`. Depending on the state of the notebook, the `x` can be:
 
 To run a notebook, simply click on the notebook name from the `Notebooks` list.
 
-* Run the `pca-features` notebook first. It reads in and transforms the wine data set. It also creates data files that will be required by the next notebook.
+* Run the `pca-features` notebook first. It reads in and transforms the wine data set. It also creates data files that will be required by the next notebook. These `csv` data files can be viewed by selecting `Data sets` from the project `Assets` list.
 
 * Run the `pca-modeling` notebook, which generates and saves our data model.
 
@@ -244,7 +244,7 @@ IBM Watson Machine Learning provides the mechanism to deploy our model as a web 
 
 ### 8. Deploy our scripts as a job
 
-* From the details panel for the `feature_engineering.py` script, press the `job` button. 
+* From the details panel for the `extract_and_score.py` script, press the `job` button.
 
 ![](doc/source/images/ml-script-details.png)
 
@@ -315,7 +315,7 @@ scripts/extract_and_score.py
 
     > Important: The endpoints will end with the string `/trigger`. Delete that portion of the URL as the script will append either `/trigger` or `/status` to the endpoints, as needed.
 
-* Finish by saving the new version of the script.
+* Finish by saving the new version of the script by clicking on the `Save` icon located at the top right side of the page.
 
 ![](doc/source/images/studio-modify-script-2.png)
 
@@ -323,35 +323,56 @@ scripts/extract_and_score.py
 
 To avoid having to go back and forth between Watson Studio Local and Watson Machine Learning (which includes re-deploying and creating new release versions), make sure the scripts run locally in Watson Studio Local first.
 
-* From the project page, click on `Scripts` in the `Assets` list.  
+Scripts can be run from either the detail panel for the script, or from the script editor.
 
-![](doc/source/images/studio-scripts-list-full.png)
+1. Run as a job from the script detail panel:
 
-Start with the script `feature_engineering`. Use the menu bar on the right side of the script row to `Create Job` and run the script.
+    * From the project page, click on `Scripts` in the `Assets` list.
 
-In the `Create Job` run panel, provide a unique name and make sure you use the following options:
-  * Type: `Script Run`
-  * Worker: `Python 3`
-  * Source asset: `/scripts/feature_engineering.py`
-  * Command line arguments: `v1`
-  * Scheduled to run: `On demand`
+    ![](doc/source/images/studio-scripts-list-full.png)
 
-After you press the `Create` button, you will see the run panel. 
+    Start with the script `feature_engineering`. Use the menu bar on the right side of the script row to `Create Job` and run the script.
 
-![](doc/source/images/studio-script-run.png)
+    In the `Create Job` run panel, provide a unique name and make sure you use the following options:
+    * Type: `Script Run`
+    * Worker: `Python 3`
+    * Source asset: `/scripts/feature_engineering.py`
+    * Command line arguments: `v1`
+    * Scheduled to run: `On demand`
 
-If you scroll down a bit, you will see a `Run Now` button. Click it to start the script. Again, you will be presented with a dialog that requires you give it a run name. The rest of the values will be defaulted to values you already set, so they do not need to be modified. Click the `Run` button to run the script.
+    After you press the `Create` button, you will see the run panel.
 
-You will be transferred back to the run panel where you can see the status (listed under `Duration`) and a tail of the log file. Once completed successfully, you should see 2 new files listed under `Data sets` in the `Assets` list.
+    ![](doc/source/images/studio-script-run.png)
 
-![](doc/source/images/studio-data-sets-list.png)
+    If you scroll down a bit, you will see a `Run Now` button. Click it to start the script. Again, you will be presented with a dialog that requires you give it a run name. The rest of the values will be defaulted to values you already set, so they do not need to be modified. Click the `Run` button to run the script.
 
-> Note: The created data files (`target` and `features`) will have a version tag appended to their name. This matches the command line argument we passed into the script.
+    You will be transferred back to the run panel where you can see the status (listed under `Duration`) and a tail of the log file. Once completed successfully, you should see 2 new files listed under `Data sets` in the `Assets` list.
 
-Repeat this process to run the `model_scoring` script. And if that completes successfully, run the `extract_and_score` script.
+    ![](doc/source/images/studio-data-sets-list.png)
 
-Once you have verified that all of the scripts are working, commit and push the changes 
-to the Watson Studio Master Repository, as described above in [Step #5](#5-commit-changes-to-watson-studio-local-master-repository). Make sure you bump the version number.
+    > NOTE: The created data files (`target` and `features`) will have a version tag appended to their name. This matches the command line argument we passed into the script.
+
+1. Run interactively from the script editor
+
+    * from the project page, click on `Scripts` in the `Assets` list, then click on the `feature_engineering` script in the list. This will bring up the script editor.
+
+    ![](doc/source/images/studio-script-editor.png)
+
+    Click the `Run configuration` button in the tool bar and then add `v1` as a command line argument.
+
+    ![](doc/source/images/studio-script-config.png)
+
+    Drag the sizing icon located on the right side of the panel to open up the console log. Then start the script by clicking on the `Run` -> `Run as job` button in the tool bar.
+
+    The script will begin executing and displaying output to the console log.
+
+    ![](doc/source/images/studio-script-execute.png)
+
+Using either method, repeat this process to run the `model_scoring` script, and then the  `extract_and_score` script.
+
+> NOTE: The `extract_and_score` script will fail when it attempts to check the status of the `model_scoring` script. Remember, it envokes the other scripts by calling their endpoints which are deployed in Watson Machine Learning. The problem is that those deployed scripts do not have the updated endpoint information yet, and won't until we push our changes back up to the Watson Machine Learning release model (which we will do next).
+
+Once you have verified the scripts, commit and push the changes to the Watson Studio Master Repository, as described above in [Step #5](#5-commit-changes-to-watson-studio-local-master-repository). Make sure you bump the version number.
 
 ### 13. Manage your model with IBM Watson Machine Learning
 
@@ -383,9 +404,17 @@ To get the ball rolling, let's start by running our `extract_and_score` script. 
 
 ![](doc/source/images/ml-script-launch-job.png)
 
-* You can view the status of the job from the same panel. In the case of the `extract-and-score` script, three separate jobs will be launched (the main script, and the calls to the other scripts). 
+You can view the status of the job from the same panel. To see the associated log file, click the `View logs` menu option located on the right side of the job row.
 
-![](doc/source/images/mmd-final-status.png)
+![](doc/source/images/ml-final-status.png)
+
+From the main dashboard, you can also so that the script completed successfully, and also note that in the case of the `extract-and-score` script, three separate jobs were launched (the main script, and the two envoked scripts).
+
+![](doc/source/images/ml-dashboard-script-status.png)
+
+If the script completes succesfully, there should be a three versioned data files that should be added as `Data sets` assets in the project. The `scoring_output-v1` file contains the final wine classification scores.
+
+![](doc/source/images/ml-data-sets-updated.png)
 
 Now that the model has been accessed, we can monitor ...
 
