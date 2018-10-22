@@ -8,7 +8,7 @@ The goal of this code pattern is to demonstrate how data scientists can leverage
 
 To illustrate this, an example data science workflow which classifies 3 different wine categories from the chemical properties of those wines is used in this code pattern.
 
-* For feature extraction, Principal component analysis (PCA) is applied on the wine classification datatset and two principal components are extarcted.
+* For feature extraction, Principal component analysis (PCA) is applied on the wine classification datatset and two principal components are extracted.
 
 * For the classification model, Logistic regression (a popular machine learning model) is applied on the extracted components to predict the wine categories.
 
@@ -58,6 +58,10 @@ When you have completed this code pattern, you will understand how to:
 
 * [Artificial Intelligence](https://medium.com/ibm-data-science-experience): Artificial intelligence can be applied to disparate solution spaces to deliver disruptive technologies.
 * [Python](https://www.python.org/): Python is a programming language that lets you work more quickly and integrate your systems more effectively.
+
+# Watch the Video
+
+[![](http://img.youtube.com/vi/4GWmsVGUk9A.jpg)](https://youtu.be/4GWmsVGUk9A)
 
 # Prerequisites
 
@@ -370,7 +374,7 @@ Scripts can be run from either the detail panel for the script, or from the scri
 
 Using either method, repeat this process to run the `model_scoring` script, and then the  `extract_and_score` script.
 
-> NOTE: The `extract_and_score` script will fail when it attempts to check the status of the `model_scoring` script. Remember, it envokes the other scripts by calling their endpoints which are deployed in Watson Machine Learning. The problem is that those deployed scripts do not have the updated endpoint information yet, and won't until we push our changes back up to the Watson Machine Learning release model (which we will do next).
+> NOTE: The `extract_and_score` script will fail when it attempts to check the status of the `model_scoring` script. Remember, it invokes the other scripts by calling their endpoints which are deployed in Watson Machine Learning. The problem is that those deployed scripts do not have the updated endpoint information yet, and won't until we push our changes back up to the Watson Machine Learning release model (which we will do next).
 
 Once you have verified the scripts, commit and push the changes to the Watson Studio Master Repository, as described above in [Step #5](#5-commit-changes-to-watson-studio-local-master-repository). Make sure you bump the version number.
 
@@ -408,7 +412,7 @@ You can view the status of the job from the same panel. To see the associated lo
 
 ![](doc/source/images/ml-final-status.png)
 
-From the main dashboard, you can also so that the script completed successfully, and also note that in the case of the `extract-and-score` script, three separate jobs were launched (the main script, and the two envoked scripts).
+From the main dashboard, you can also see that the script completed successfully, and also note that in the case of the `extract-and-score` script, three separate jobs were launched (the main script, and the two invoked scripts).
 
 ![](doc/source/images/ml-dashboard-script-status.png)
 
@@ -416,11 +420,9 @@ If the script completes succesfully, there should be a three versioned data file
 
 ![](doc/source/images/ml-data-sets-updated.png)
 
-Now that the model has been accessed, we can monitor ...
-
-# Troubleshooting
-
 # Links
+
+* [BM Watson Studio Local guided demo: Build, train, and deploy a machine-learning model without coding](https://www.ibm.com/cloud/garage/demo/try-watson-studio-local)
 
 # Learn more
 
