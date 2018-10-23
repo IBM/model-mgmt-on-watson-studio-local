@@ -422,7 +422,7 @@ If the script completes succesfully, there should be a three versioned data file
 
 # Links
 
-* [BM Watson Studio Local guided demo: Build, train, and deploy a machine-learning model without coding](https://www.ibm.com/cloud/garage/demo/try-watson-studio-local)
+* [IBM Watson Studio Local guided demo: Build, train, and deploy a machine-learning model without coding](https://www.ibm.com/cloud/garage/demo/try-watson-studio-local)
 
 # Learn more
 
