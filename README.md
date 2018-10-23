@@ -61,7 +61,7 @@ When you have completed this code pattern, you will understand how to:
 
 # Watch the Video
 
-[![](https://img.youtube.com/vi/4GWmsVGUk9A.jpg)](https://www.youtube.com/watch?v=4GWmsVGUk9A)
+[![](doc/source/images/studio-desktop.png)](https://www.youtube.com/watch?v=4GWmsVGUk9A)
 
 # Prerequisites
 
