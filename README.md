@@ -44,7 +44,7 @@ When you have completed this code pattern, you will understand how to:
 ![](doc/source/images/architecture.png)
 
 1. The wine classification data set is loaded into Watson Studio Local as an asset.
-2. The user interacts with all assets via Watson Studio Local. Assets include Jupyter notebooks, python scripts, and data sets.
+2. The user interacts with Watson Studio Local to access assets such as Jupyter notebooks, python scripts, and data sets.
 3. The Jupyter notebooks use Spark DataFrame operations to clean the dataset and use Spark MLlib to train a PCA classification model.
 4. The model and accompanying scripts are deployed and run from Watson Machine Learning.
 
