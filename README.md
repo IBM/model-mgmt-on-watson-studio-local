@@ -43,10 +43,10 @@ When you have completed this code pattern, you will understand how to:
 
 ![](doc/source/images/architecture.png)
 
-1. Use Spark DataFrame operations to clean the dataset and use Spark MLlib to train a PCA classification model.
-2. Save the resulting model into Watson Studio Local.
-3. The user can run the provided notebooks in Watson Studio Local.
-4. Use the Watson Machine Learning feature to deploy and access the model to generate wine classification.
+1. The wine classification data set is loaded into Watson Studio Local as an asset.
+2. The user interacts with all assets via Watson Studio Local. Assets include Jupyter notebooks, python scripts, and data sets.
+3. The Jupyter notebooks use Spark DataFrame operations to clean the dataset and use Spark MLlib to train a PCA classification model.
+4. The model and accompanying scripts are deployed and run from Watson Machine Learning.
 
 ## Included components
 
