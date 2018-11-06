@@ -8,11 +8,11 @@ The goal of this code pattern is to demonstrate how data scientists can leverage
 
 To illustrate this, an example data science workflow which classifies 3 different wine categories from the chemical properties of those wines is used in this code pattern.
 
-* For feature extraction, Principal component analysis (PCA) is applied on the wine classification datatset and two principal components are extracted.
+* For feature extraction, Principal component analysis (PCA) is applied on the wine classification dataset and two principal components are extracted.
 
 * For the classification model, Logistic regression (a popular machine learning model) is applied on the extracted components to predict the wine categories.
 
-> **What is PCA?** Principal component analysis (PCA) is a popular dimensionality reduction technique which is used to reduce N number of numerical variables into few principal components that are used as features in the machine learning model. These prinicpal components capture a major percentage of the combined variance effect of all the variables.
+> **What is PCA?** Principal component analysis (PCA) is a popular dimensionality reduction technique which is used to reduce N number of numerical variables into few principal components that are used as features in the machine learning model. These principal components capture a major percentage of the combined variance effect of all the variables.
 
 > **What is IBM Watson Studio Local?** Watson Studio Local is an on premises solution for data scientists and data engineers. It offers a suite of data science tools that integrate with RStudio, Spark, Jupyter, and Zeppelin notebook technologies.
 
@@ -20,7 +20,7 @@ To illustrate this, an example data science workflow which classifies 3 differen
 
 This repo contains two Jupyter notebooks illustrating how to extract features and build a model on the [wine classification data set](https://www.kaggle.com/brynja/wineuci). The data contains a list of wines with their associated chemical features and assigned wine classification. There are three scripts in the repo to automate the feature extraction, score the extracted features and combine the two steps as one wrapper respectively.
 
-* The first notebook uses feature engineering techniques such as PCA and standard scaling to extarct the features for the model development from a wine dataset.
+* The first notebook uses feature engineering techniques such as PCA and standard scaling to extract the features for the model development from a wine dataset.
 
 * The second notebook trains, builds and saves a model that can be scored. The model can then be deployed and accessed remotely.
 
@@ -28,7 +28,7 @@ This repo contains two Jupyter notebooks illustrating how to extract features an
 
 * The second script is used to score the set of extracted features on the deployed model and save the results with versioning.
 
-* The third script is simply a wrapper script that runs the above two scripts one after the other and used to automate the feature extarction and model scoring in one run.
+* The third script is simply a wrapper script that runs the above two scripts one after the other and used to automate the feature extraction and model scoring in one run.
 
 Using the Watson Machine Learning feature in Watson Studio, all three scripts are deployed as a service to automate feature extraction and scoring in production.
 
@@ -162,7 +162,7 @@ From the `Local File` tab, click the `Select from your local file system` button
 
 ### 4. Run the notebooks to create our model
 
-To view our notebooks, Select `Notebooks` in the project `Assets` list.
+To view our notebooks, select `Notebooks` in the project `Assets` list.
 
 ![](doc/source/images/studio-notebook-list-2.png)
 
