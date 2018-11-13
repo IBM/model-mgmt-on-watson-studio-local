@@ -420,6 +420,12 @@ If the script completes succesfully, there should be a three versioned data file
 
 ![](doc/source/images/ml-data-sets-updated.png)
 
+# Sample output
+
+Here are links to each of the notebooks with example output:
+* [pca-features](https://github.com/IBM/model-mgmt-on-watson-studio-local/tree/master/data/examples/pca-features.ipynb)
+* [pca-modeling](https://github.com/IBM/model-mgmt-on-watson-studio-local/tree/master/data/examples/pca-modeling.ipynb)
+
 # Links
 
 * [IBM Watson Studio Local guided demo: Build, train, and deploy a machine-learning model without coding](https://www.ibm.com/cloud/garage/demo/try-watson-studio-local)
