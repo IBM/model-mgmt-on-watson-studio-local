@@ -67,9 +67,7 @@ When you have completed this code pattern, you will understand how to:
 
 ## Install Watson Studio Local
 
-Watson Studio Local provides a suite of data science tools, such as Spark and Jupyter notebooks, that are needed to complete this code pattern. Use the following link to install and configure your Watson Studio Local instance.
-
-https://content-dsxlocal.mybluemix.net/docs/content/local/welcome.html
+Watson Studio Local provides a suite of data science tools, such as Spark and Jupyter notebooks, that are needed to complete this code pattern. Read the [Installation Guide](https://content-dsxlocal.mybluemix.net/docs/content/local/welcome.html) to install and configure your Watson Studio Local instance.
 
 # Steps
 
