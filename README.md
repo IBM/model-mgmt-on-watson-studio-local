@@ -51,8 +51,8 @@ When you have completed this code pattern, you will understand how to:
 ## Included components
 
 * [IBM Watson Studio Local](https://content-dsxlocal.mybluemix.net/docs/content/local/overview.html): An out-of-the-box on premises solution for data scientists and data engineers. It offers a suite of data science tools that integrate with RStudio, Spark, Jupyter, and Zeppelin notebook technologies.
-* [Apache Spark](http://spark.apache.org/): An open-source, fast and general-purpose cluster computing system.
-* [Jupyter Notebooks](http://jupyter.org/): An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.
+* [Apache Spark](https://spark.apache.org/): An open-source, fast and general-purpose cluster computing system.
+* [Jupyter Notebooks](https://jupyter.org/): An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.
 
 ## Featured technologies
 
@@ -421,8 +421,8 @@ If the script completes succesfully, there should be a three versioned data file
 # Sample output
 
 Here are links to each of the notebooks with example output:
-* [pca-features](https://github.com/IBM/model-mgmt-on-watson-studio-local/tree/master/data/examples/pca-features.ipynb)
-* [pca-modeling](https://github.com/IBM/model-mgmt-on-watson-studio-local/tree/master/data/examples/pca-modeling.ipynb)
+* [pca-features](https://github.com/IBM/model-mgmt-on-watson-studio-local/blob/master/data/examples/pca-features.ipynb)
+* [pca-modeling](https://github.com/IBM/model-mgmt-on-watson-studio-local/blob/master/data/examples/pca-modeling.ipynb)
 
 # Links
 
@@ -430,12 +430,12 @@ Here are links to each of the notebooks with example output:
 
 # Learn more
 
-* **Data Analytics Code Patterns**: Enjoyed this Code Pattern? Check out our other [Data Analytics Code Patterns](https://developer.ibm.com/code/technologies/data-science/)
+* **Data Analytics Code Patterns**: Enjoyed this Code Pattern? Check out our other [Data Analytics Code Patterns](https://developer.ibm.com/technologies/data-science/)
 * **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
-* **Watson Studio**: Master the art of data science with IBM's [Watson Studio](https://datascience.ibm.com/)
-* **Spark on IBM Cloud**: Need a Spark cluster? Create up to 30 Spark executors on IBM Cloud with our [Spark service](https://console.bluemix.net/catalog/services/apache-spark)
+* **Watson Studio**: Master the art of data science with IBM's [Watson Studio](https://www.ibm.com/cloud/watson-studio)
+* **Spark on IBM Cloud**: Need a Spark cluster? Create up to 30 Spark executors on IBM Cloud with our [Spark service](https://cloud.ibm.com/catalog/services/apache-spark)
 
 # License
-This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
+This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
-[Apache Software License (ASL) FAQ](http://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
+[Apache Software License (ASL) FAQ](https://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
